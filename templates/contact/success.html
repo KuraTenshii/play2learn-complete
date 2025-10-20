@@ -1,0 +1,10 @@
+{% extends "_base_vue.html" %}
+{% block title %}Thank You{% endblock %}
+
+{% block main %}
+<div class="container mt-5 text-center">
+  <h2>Thank you for contacting us!</h2>
+  <p>We’ll get back to you as soon as possible.</p>
+  <a href="{% url 'games:home' %}" class="btn btn-secondary mt-3">Return Home</a>
+</div>
+{% endblock %}

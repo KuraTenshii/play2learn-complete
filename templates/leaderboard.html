@@ -1,0 +1,22 @@
+{% extends "_base_vue.html" %}
+{% block title %}Leaderboards{% endblock %}
+
+{% block main %}
+<h2>{{ game_type|title }} Leaderboard</h2>
+<table>
+  <tr>
+    <th>User</th>
+    <th>Score</th>
+    <th>Time</th>
+    <th>Settings</th>
+  </tr>
+  {% for s in scores %}
+  <tr>
+    <td>{{ s.user.username }}</td>
+    <td>{{ s.final_score }}</td>
+    <td>{{ s.finished_at }}</td>
+    <td>{{ s.settings }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

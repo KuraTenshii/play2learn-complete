@@ -1,0 +1,28 @@
+{% extends '_base_vue.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Log in{% endblock %}
+
+{% block main %}
+<body>
+  <div class="card border-primary m-auto mb-3" style="max-width: 30rem">
+    <h2 class="card-header text-center">Log in</h2>
+    <div class="card-body">
+      <form method="post" class="m-auto">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div>
+          <button class="form-control btn btn-primary" style="max-width:30rem" type="submit">
+            Log in
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer text-center">
+      <p>
+        <a href="{% url 'account_signup' %}">Need an account? Register</a>
+      </p>
+    </div>
+  </div>
+</body>
+{% endblock %}
