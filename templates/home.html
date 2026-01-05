@@ -2,14 +2,27 @@
 
 {% block title %}Home{% endblock %}
 {% block main %}
-  <h1 class="text-center">Home</h1>
-  <body>
-    <div class="container text-center card border-success">
-      <p class="fs-5 fw-bold text-decoration-underline">Welcome to the GAMES!</p>
-      <div class="">
-        <div class="ms-auto"><!--plan on filling these empty spaces up for the home page!--></div>
-        <div class="me-auto"></div>
+<h1 class="text-center mb-4">Home</h1>
+<div id="reviewCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    {% for review in reviews %}
+      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+        <div class="card text-center p-4 shadow-sm">
+          <p class="fs-5">"{{ review.content }}"</p>
+          <small class="text-muted">— {{ review.user.username }}</small>
+        </div>
       </div>
-    </div>
-  {{ block.super }}
+    {% empty %}
+      <div class="carousel-item active">
+        <p class="text-center">No reviews yet.</p>
+      </div>
+    {% endfor %}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#reviewCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#reviewCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
 {% endblock %}

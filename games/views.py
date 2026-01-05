@@ -1,3 +1,5 @@
+from django.http import JsonResponse
+import json
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import GameHistory
@@ -11,9 +13,6 @@ class MathFactsView(TemplateView):
 
 class AnagramHuntView(TemplateView):
     template_name = "anagram-hunt.html"
-    
-def home_view(request):
-    return render(request, 'home.html')
 
 def leaderboard(request):
     math_facts_scores = (
@@ -30,12 +29,10 @@ def leaderboard(request):
         "anagram_scores": anagram_scores,
     })
 
-
 @login_required
 def my_game_history(request):
     histories = GameHistory.objects.filter(user=request.user)
     return render(request, "history.html", {"histories": histories})
-
 
 @login_required
 def math_facts_result(request):
@@ -51,9 +48,8 @@ def math_facts_result(request):
             settings=settings,
             final_score=score,
         )
-        return redirect("games:leaderboard")
+        return redirect("reviews:submit-review")
     return redirect("games:math-facts")
-
 
 @login_required
 def anagram_hunt_result(request):
@@ -69,5 +65,21 @@ def anagram_hunt_result(request):
             settings=settings,
             final_score=score,
         )
-        return redirect("games:leaderboard")
+        return redirect("reviews:submit-review")
     return redirect("games:anagram-hunt")
+
+def home_view(request):
+    reviews = Review.objects.filter(approved=True).order_by("-created_at")[:10]
+    return render(request, "home.html", {"reviews": reviews})
+
+@login_required
+def submit_score(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        GameHistory.objects.create(
+            user=request.user,
+            game_type=data["game_type"],
+            final_score=data["score"],
+            settings=data.get("settings", {})
+        )
+        return JsonResponse({"status": "ok"})

@@ -2,8 +2,10 @@
 {% block title %}Leaderboards{% endblock %}
 
 {% block main %}
-<h2>{{ game_type|title }} Leaderboard</h2>
-<table>
+  <div class="mx-auto text-center mt-4 mb-3" style="max-width: 900px;">
+    <h2>{{ game_type|cut:"_"|title }} Leaderboard</h2>
+  </div>
+  <table class="table table-striped mx-auto" style="max-width: 900px;">
   <tr>
     <th>User</th>
     <th>Score</th>
@@ -15,7 +17,11 @@
     <td>{{ s.user.username }}</td>
     <td>{{ s.final_score }}</td>
     <td>{{ s.finished_at }}</td>
-    <td>{{ s.settings }}</td>
+    <td>
+      {% if s.settings %}
+        {{ s.settings }}
+      {% else %} {% endif %}
+    </td>
   </tr>
   {% endfor %}
 </table>

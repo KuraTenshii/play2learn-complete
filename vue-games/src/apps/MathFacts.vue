@@ -99,6 +99,7 @@
       <div class="row d-flex flex-col text-center">
         <button @click="play" class="btn btn-primary w-100 m-1">Play Again</button>
         <button @click="screen = 'start'" class="btn btn-secondary w-100 m-1">Back to Start Screen</button>
+        <a href="/reviews/submit/" class="btn btn-outline-secondary w-100 m-1">Leave a Review</a>
       </div>
     </div>
   </div>
@@ -112,6 +113,7 @@
 
 <script>
 import { getRandomInteger } from '@/helpers/helpers';
+import axios from 'axios';
 
 export default {
   name: 'MathGame',
@@ -159,6 +161,26 @@ export default {
       }
     },
     async recordScore() {
+  try {
+    await axios.post(
+      "/games/submit-score/",
+      {
+        game_type: "math_facts",
+        score: this.score,
+        settings: {
+          operation: this.operation,
+          max_number: this.maxNumber
+        }
+      },
+      {
+        headers: {
+          "X-CSRFToken": window.CSRF_TOKEN
+        }
+      }
+    );
+  } catch (error) {
+    console.error("Failed to record score:", error);
+  }
       // TODO: when Math Facts finishes, make an Ajax call with axios (this.axios)
       // to record the score on the backend
     }

@@ -28,6 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#ADMIN CREDENTIALS
+#username: moham
+#password: Kobe11433Max
 
 # Application definition
 
@@ -139,7 +142,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 #AUTHENTICATION SETTINGS
 LOGIN_URL = 'account_login'
-LOGIN_REDIRECT_URL = 'registration:user_account'
+LOGIN_REDIRECT_URL = 'games:home'
+LOGOUT_REDIRECT_URL = 'games:home'
+
 
 ## django-allauth settings
 ACCOUNT_AUTHENTICATION_METHOD = 'email' # Default: 'username'

@@ -1,7 +1,6 @@
 from django.urls import path
-
-from leaderboards.views import LeaderboardsView
+from .views import leaderboard
 
 urlpatterns = [
-    path('leaderboards/', LeaderboardsView.as_view(), name='leaderboard'),
+    path("leaderboard/<str:game_type>/", leaderboard, name="leaderboard"),
 ]

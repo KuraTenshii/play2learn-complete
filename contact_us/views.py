@@ -17,11 +17,11 @@ def contact_view(request):
                 recipient_list=[settings.DEFAULT_FROM_EMAIL],
                 fail_silently=False,
             )
-            return redirect('contact-us-success')
+            return redirect('contact_us:success')
     else:
         form = ContactForm()
     
     return render(request, 'contact/contact-us.html', {'form': form})
 
 def success_view(request):
-    return render(request, 'contact/contact-us-success.html')
+    return render(request, 'contact/success.html')

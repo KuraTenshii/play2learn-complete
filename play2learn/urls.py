@@ -19,17 +19,13 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    
-    #Local Apps
-    path('', include("games.urls")),
-    path('', include("leaderboards.urls")),
-    path('', include("contact_us.urls")),
-    path('', include("reviews.urls")),
-    
+
+    # Local Apps
+    path("", include(("games.urls", "games"), namespace="games")),
+    path("reviews/", include(("reviews.urls", "reviews"), namespace="reviews")),
+    path("leaderboards/", include(("leaderboards.urls", "leaderboards"), namespace="leaderboards")),
+    path("contact/", include(("contact_us.urls", "contact_us"), namespace="contact_us")),
+
     #User Apps
-    path('accounts/', include('allauth.urls')),
-    path("reviews/", include("reviews.urls")),
-    
-    #Contact Us
-    path("contact_us/", include("contact_us.urls")),
+    path("accounts/", include("allauth.urls")),
 ]

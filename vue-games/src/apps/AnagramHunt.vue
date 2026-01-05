@@ -57,6 +57,7 @@
       <div class="row d-flex flex-col text-center">
         <button @click="play" class="btn btn-primary w-100 m-1">Play Again</button>
         <button @click="screen = 'start'" class="btn btn-secondary w-100 m-1">Back to Start Screen</button>
+        <a href="/reviews/submit/" class="btn btn-outline-secondary w-100 m-1">Leave a Review</a>
       </div>
     </div>
   </div>
@@ -71,6 +72,7 @@
 <script>
 import anagrams from "@/helpers/anagrams";
 import {getRandomInteger} from "@/helpers/helpers";
+import axios from "axios";
 
 export default {
   name: 'AnagramGame',
@@ -127,6 +129,25 @@ export default {
       this.correctGuesses = [];
     },
     async recordScore() {
+  try {
+    await axios.post(
+      "/games/submit-score/",
+      {
+        game_type: "anagram_hunt",
+        score: this.score,
+        settings: {
+          word_length: this.wordLength
+        }
+      },
+      {
+        headers: {
+          "X-CSRFToken": window.CSRF_TOKEN
+        }
+      }
+    );
+  } catch (error) {
+    console.error("Failed to record score:", error);
+  }
       // TODO: when Anagram Hunt finishes, make an Ajax call with axios (this.axios)
       // to record the score on the backend
     }

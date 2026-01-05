@@ -1,0 +1,18 @@
+{% extends "_base_vue.html" %}
+
+{% block title %}Leave a Review{% endblock %}
+{% block main %}
+<div class="container py-5" style="max-width: 700px;">
+  <h2 class="text-center mb-4">Leave a Review</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="d-grid mt-3">
+      <button type="submit" class="btn btn-primary btn-lg">
+        Submit Review
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}
