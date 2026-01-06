@@ -3,25 +3,29 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
 
+from django.shortcuts import render, redirect
+from .models import ContactMessage
+
 def contact_view(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            message = form.cleaned_data['message']
-            send_mail(
-                subject=f'Contact Us Message from {name}',
-                message=f'From: {name} <{email}>\n\n{message}',
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[settings.DEFAULT_FROM_EMAIL],
-                fail_silently=False,
-            )
-            return redirect('contact_us:success')
-    else:
-        form = ContactForm()
-    
-    return render(request, 'contact/contact-us.html', {'form': form})
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        subject = request.POST.get("subject")
+        message = request.POST.get("message")
+
+        # Save to database
+        ContactMessage.objects.create(
+            name=name,
+            email=email,
+            subject=subject,
+            message=message
+        )
+
+        # Optionally, redirect to a "success" page
+        return redirect("contact_us:success")
+
+    return render(request, "contact/contact-us.html")
+
 
 def success_view(request):
     return render(request, 'contact/success.html')

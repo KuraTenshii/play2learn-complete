@@ -1,3 +1,5 @@
+{% load tz %}
+{% now "Y" as current_year %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +12,7 @@
     <script defer src="http://localhost:8080/js/chunk-vendors.js"></script>
     <script defer src="http://localhost:8080/js/app.js"></script>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Play2Learn</a>
@@ -27,14 +29,10 @@
                     {% if user.is_authenticated %}
                         <form method="post" action="{% url 'account_logout' %}" class="d-inline">
                             {% csrf_token %}
-                            <button type="submit" class="nav-link btn btn-link">
-                                Logout
-                            </button>
+                            <button type="submit" class="nav-link btn btn-link">Logout</button>
                         </form>
                     {% else %}
-                        <a class="nav-link" href="{% url 'account_login' %}">
-                            Login
-                        </a>
+                        <a class="nav-link" href="{% url 'account_login' %}">Login</a>
                     {% endif %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -49,12 +47,8 @@
                 <div class="nav-item dropdown ms-auto">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Leaderboards</a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li>
-                            <a class="dropdown-item" href="{% url 'leaderboards:leaderboard' 'math_facts' %}">Math Facts</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{% url 'leaderboards:leaderboard' 'anagram_hunt' %}">Anagram Hunt</a>
-                        </li>
+                        <li><a class="dropdown-item" href="{% url 'leaderboards:leaderboard' 'math_facts' %}">Math Facts</a></li>
+                        <li><a class="dropdown-item" href="{% url 'leaderboards:leaderboard' 'anagram_hunt' %}">Anagram Hunt</a></li>
                     </ul>
                 </div>
             </div>
@@ -64,6 +58,14 @@
         {% block main %}{% endblock %}
         <div id="app"></div>
     </main>
+    <footer class="bg-light py-3 mt-auto">
+      <div class="container d-flex justify-content-center align-items-center">
+        <span class="text-muted text-center">
+          &copy; {{ current_year }} Play2Learn. 
+          <a href="{% url 'contact_us:contact-us' %}" class="text-decoration-none">Contact Us</a>
+        </span>
+      </div>
+    </footer>
     <!-- Bootstrap JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
