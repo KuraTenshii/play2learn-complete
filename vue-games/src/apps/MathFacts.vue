@@ -163,7 +163,7 @@ export default {
     async recordScore() {
   try {
     await axios.post(
-      "/games/submit-score/",
+      "/submit-score/",
       {
         game_type: "math_facts",
         score: this.score,

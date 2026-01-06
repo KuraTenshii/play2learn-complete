@@ -163,7 +163,7 @@ ACCOUNT_SIGNUP_FORM_CLASS = "registration.forms.CustomSignupForm" ##need to add 
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "America/New_York"
 
 USE_I18N = True
 

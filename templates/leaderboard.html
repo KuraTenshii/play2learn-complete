@@ -3,7 +3,7 @@
 
 {% block main %}
   <div class="mx-auto text-center mt-4 mb-3" style="max-width: 900px;">
-    <h2>{{ game_type|cut:"_"|title }} Leaderboard</h2>
+    <h2>{{ game_name|cut:"_"|title }} Leaderboard</h2>
   </div>
   <table class="table table-striped mx-auto" style="max-width: 900px;">
   <tr>
@@ -18,10 +18,22 @@
     <td>{{ s.final_score }}</td>
     <td>{{ s.finished_at }}</td>
     <td>
-      {% if s.settings %}
-        {{ s.settings }}
-      {% else %} {% endif %}
-    </td>
+  {% if s.game_type == "math_facts" %}
+    Operation:
+    {% if s.settings.operation == "+" %}Addition
+    {% elif s.settings.operation == "-" %}Subtraction
+    {% elif s.settings.operation == "x" %}Multiplication
+    {% elif s.settings.operation == "/" %}Division
+    {% else %}{{ s.settings.operation }}
+    {% endif %}
+    |
+    Max Number: {{ s.settings.max_number }}
+  {% elif s.game_type == "anagram_hunt" %}
+    Word Length: {{ s.settings.word_length }}
+  {% else %}
+    —
+  {% endif %}
+</td>
   </tr>
   {% endfor %}
 </table>

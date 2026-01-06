@@ -28,4 +28,4 @@ urlpatterns = [
 
     #User Apps
     path("accounts/", include("allauth.urls")),
-]
+] 
